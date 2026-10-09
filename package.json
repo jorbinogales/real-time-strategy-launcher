@@ -12,6 +12,7 @@
     "build:content": "node scripts/build-content.mjs",
     "publish:prepare": "node scripts/publish-prepare.mjs",
     "dist": "electron-builder --win nsis --publish never --config electron-builder.config.cjs",
+    "predist": "node scripts/pack-content.mjs",
     "postdist": "node scripts/fixed-name.mjs",
     "test:unit": "node test/unit.mjs"
   },

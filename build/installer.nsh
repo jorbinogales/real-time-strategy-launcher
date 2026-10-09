@@ -1,7 +1,7 @@
 !include LogicLib.nsh
 !include WinMessages.nsh
 ; Personalización del instalador NSIS de MasterWar (se inyecta vía nsis.include).
-; Páginas: Bienvenida (con arte) -> Términos y políticas (licencia) -> Ubicación -> Progreso (el plugin Nsis7z ya muestra "NN% (X / Y MB)") -> Fin (Iniciar MasterWar)
+; Páginas: Bienvenida (con arte) -> Términos y políticas (licencia) -> Ubicación -> Progreso con "NN %" -> Fin (Iniciar MasterWar)
 
 !macro customWelcomePage
   !define MUI_WELCOMEPAGE_TITLE "Bienvenido a MasterWar"
@@ -26,6 +26,49 @@
   !define MUI_FINISHPAGE_RUN_TEXT "Iniciar MasterWar"
   !insertmacro MUI_PAGE_FINISH
 !macroend
+
+; ---- Juego (build/content.7z) -> $INSTDIR\resources\content, con porcentaje real.
+; Nsis7z::ExtractWithCallback llama a la funcion DESDE el hilo de instalacion (seguro); un temporizador en el hilo de UI
+; ejecutando codigo NSIS a la vez que la extraccion tumba el instalador (probado), asi que no se usa.
+!ifndef BUILD_UNINSTALLER
+!include /NONFATAL "content-size.nsh"
+!endif
+
+!macro customInit
+  !ifndef BUILD_UNINSTALLER
+  !ifdef CONTENT_SIZE_KB
+    SectionGetSize 0 $0
+    IntOp $0 $0 + ${CONTENT_SIZE_KB}
+    SectionSetSize 0 $0
+  !endif
+  !endif
+!macroend
+
+!macro customInstall
+  GetDlgItem $R6 $HWNDPARENT 1038
+  SendMessage $R6 ${WM_SETTEXT} 0 "STR:Copiando archivos del juego... 0 %"
+  SetOutPath "$INSTDIR\resources\content"
+  SetCompress off
+  File "/oname=$PLUGINSDIR\content.7z" "${BUILD_RESOURCES_DIR}\content.7z"
+  GetFunctionAddress $R9 ContentProgress
+  Nsis7z::ExtractWithCallback "$PLUGINSDIR\content.7z" $R9
+  Delete "$PLUGINSDIR\content.7z"
+  SetOutPath "$INSTDIR"
+  SendMessage $R6 ${WM_SETTEXT} 0 "STR:Copiando archivos del juego... 100 %"
+!macroend
+
+!ifndef BUILD_UNINSTALLER
+Function ContentProgress
+  Pop $R7                              ; bytes extraidos (int64)
+  Pop $R8                              ; bytes totales
+  System::Int64Op $R7 * 100
+  Pop $R7
+  System::Int64Op $R7 / $R8
+  Pop $R7
+  GetDlgItem $R6 $HWNDPARENT 1038
+  SendMessage $R6 ${WM_SETTEXT} 0 "STR:Copiando archivos del juego... $R7 %"
+FunctionEnd
+!endif
 
 !macro customUnInstall
   DetailPrint "Tus ajustes y partidas guardadas (carpeta de datos de MasterWar en tu perfil) NO se eliminan."

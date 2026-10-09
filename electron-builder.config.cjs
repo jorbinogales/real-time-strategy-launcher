@@ -1,12 +1,10 @@
 'use strict';
 // Configuración de electron-builder (instalador NSIS asistido). La versión sale del archivo VERSION.
-// MASTERWAR_CONTENT_DIR solo sirve para iterar rápido con un contenido pequeño (por defecto: content/).
 const fs = require('node:fs');
 const path = require('node:path');
 
 const version = fs.readFileSync(path.join(__dirname, 'VERSION'), 'utf8').trim();
-const contentDir = process.env.MASTERWAR_CONTENT_DIR || 'content';
-if (!fs.existsSync(path.join(__dirname, contentDir, 'manifest.json'))) throw new Error('Falta content/manifest.json: ejecuta npm run build:content');
+if (!fs.existsSync(path.join(__dirname, 'build/content.7z'))) throw new Error('Falta build/content.7z: usa npm run dist (predist lo genera tras npm run build:content)');
 
 module.exports = {
   appId: 'com.hayai.masterwar',
@@ -15,11 +13,9 @@ module.exports = {
   extraMetadata: { version },
   directories: { output: 'dist', buildResources: 'build' },
   files: ['src/**/*', 'launcher/**/*', 'package.json', 'build/icon.ico', '!**/*.d.ts'],
-  // El juego va como archivos reales (fuera del asar): el updater trabaja sobre ellos.
-  extraResources: [
-    { from: contentDir, to: 'content' },
-    { from: 'build/license-es.txt', to: 'license-es.txt' },
-  ],
+  // El juego NO va aqui: build/content.7z (scripts/pack-content.mjs) lo extrae installer.nsh en resources/content
+  // con progreso numerico. Queda como archivos reales (fuera del asar): el updater trabaja sobre ellos.
+  extraResources: [{ from: 'build/license-es.txt', to: 'license-es.txt' }],
   compression: process.env.MASTERWAR_COMPRESSION || 'normal',
   win: { target: [{ target: 'nsis', arch: ['x64'] }], icon: 'build/icon.ico', signAndEditExecutable: true },
   nsis: {

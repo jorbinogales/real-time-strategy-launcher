@@ -53,20 +53,20 @@ def page(h): return user32.FindWindowExW(h, 0, '#32770', None)
 main = find_main(); time.sleep(1.2)
 shot(main, '1-bienvenida.png'); click(main)
 time.sleep(1.2); shot(main, '2-terminos.png'); click(main)
-for step in range(4):                           # modo de instalacion (si aparece) y ubicacion
-    time.sleep(2.0)
+edit = 0
+for _ in range(60):                             # esperar a la pagina de ubicacion (puede haber pagina de modo antes)
+    time.sleep(0.5)
     edit = user32.GetDlgItem(page(main), 1019)
-    if edit:
-        user32.SendMessageW(edit, WM_SETTEXT, 0, ctypes.c_wchar_p(target))
-        time.sleep(0.5); shot(main, '3-ubicacion.png'); click(main); break
-    shot(main, f'3-modo-{step}.png'); click(main)
+    if edit: break
+user32.SendMessageW(edit, WM_SETTEXT, 0, ctypes.c_wchar_p(target))
+time.sleep(0.5); shot(main, '3-ubicacion.png'); click(main)
 n, last, t0 = 0, '', time.time()
 while time.time() - t0 < 900 and user32.IsWindow(main):
     time.sleep(0.15)
     if user32.GetDlgItem(page(main), 1203) or user32.GetDlgItem(page(main), 1204): break      # página final
     sub = text(user32.GetDlgItem(main, 1038))
-    if sub != last and n < 30:
-        last = sub; n += 1; shot(main, f'4-progreso-{n:02d}.png')
+    if sub != last and n < 400:
+        last = sub; n += 1; print('  subtitulo:', repr(sub), flush=True); (n % 8 == 1 or n < 3) and shot(main, f'4-progreso-{n:02d}.png')
 time.sleep(1.0); shot(main, '5-final.png')
 if '--no-run' in sys.argv and user32.IsWindow(main):
     user32.SendMessageW(user32.GetDlgItem(page(main), 1203), BM_CLICK, 0, 0)    # desmarcar "Iniciar MasterWar"

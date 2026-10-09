@@ -3,3 +3,5 @@ content/
 dist/
 dist-updates/
 .test-tmp/
+build/content.7z
+build/content-size.nsh

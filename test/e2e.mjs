@@ -55,11 +55,11 @@ try {
   await c.waitFor(`document.body.dataset.state === 'available'`);
   check('launcher arranca y detecta actualización', true);
   check('muestra versión instalada 0.1.0', (await text(c, 'version')).includes('0.1.0'), await text(c, 'version'));
-  const status = await text(c, 'status');
-  const mbShown = Number(/([\d,]+) MB/.exec(status)?.[1].replace(',', '.'));
-  check('muestra cantidad a actualizar (solo cambiados)', Math.abs(mbShown - expectedBytes / 1048576) < 0.1, `${status} (esperado ${(expectedBytes / 1048576).toFixed(1)} MB)`);
+  const sizeTxt = await c.eval(`document.getElementById('size').hidden ? '' : document.getElementById('size').textContent`);
+  const mbShown = Number(/([\d,]+) MB/.exec(sizeTxt)?.[1].replace(',', '.'));
+  check('muestra cantidad a actualizar (solo cambiados)', Math.abs(mbShown - expectedBytes / 1048576) < 0.1, `${sizeTxt} (esperado ${(expectedBytes / 1048576).toFixed(1)} MB)`);
   check('botón ACTUALIZAR en lugar de JUGAR', (await text(c, 'action')) === 'ACTUALIZAR');
-  check('arte: hero y 16 unidades', (await c.eval(`document.querySelectorAll('#strip button').length`)) === 16 && (await c.eval(`getComputedStyle(document.querySelector('.bg')).backgroundImage.includes('hero.jpg')`)));
+  check('arte: hero de fondo, escudos de 4 razas y unidad destacada cargada', (await c.eval(`document.querySelectorAll('#races .race-btn').length`)) === 4 && (await c.eval(`getComputedStyle(document.querySelector('.bg'), '::before').backgroundImage.includes('hero')`)) && (await c.waitFor(`(() => { const i = document.getElementById('featured-img'); return i.complete && i.naturalWidth > 0 && document.querySelector('#races img').naturalWidth > 0; })()`)));
   await c.shot(path.join(out, '1-update-disponible.png'));
 
   // ---- 2. update con archivo corrupto: se rechaza y no se toca lo instalado

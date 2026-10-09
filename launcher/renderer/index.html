@@ -7,36 +7,51 @@
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="styles.css">
 </head>
-<body data-state="checking">
-  <!-- Maqueta funcional. La dirección visual final la define L.E.O.A.R.T: restilizar solo este HTML y styles.css.
-       La lógica vive en app.js y se engancha por id / data-state; el proceso principal no se toca. -->
+<body data-state="checking" data-race="humanos">
+  <!-- Direccion visual: L.E.O.A.R.T. La logica vive en app.js y se engancha por id / data-state (checking|ready|available|updating|error). -->
   <div class="bg" aria-hidden="true"></div>
+  <div class="dragbar" aria-hidden="true"></div>
 
-  <header class="topbar">
-    <img class="logo" src="art/logo.svg" alt="MasterWar">
-    <span class="version" id="version">Versión …</span>
-  </header>
+  <main class="launcher">
+    <section class="info" aria-label="Estado del juego">
+      <h1 class="logo"><img src="art/logo.svg" alt="MasterWar"></h1>
+      <p class="tagline">Estrategia medieval en tiempo real</p>
+      <p class="version-tag" id="version">Versión …</p>
 
-  <main class="layout">
-    <section class="feature" aria-label="Unidades del juego">
-      <figure class="featured">
+      <div class="status-block">
+        <p id="size" class="size" hidden><b id="size-mb">0 MB</b><span>por descargar</span></p>
+        <p class="status-row">
+          <svg class="status-ico ico-check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>
+          <svg class="status-ico ico-warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5l9.5 16.5h-19z"/><path d="M12 10v4.5M12 17.4v.1"/></svg>
+          <span class="status-ico ico-spin" aria-hidden="true"></span>
+          <span id="status" class="status" role="status" aria-live="polite">Comprobando actualizaciones…</span>
+        </p>
+      </div>
+
+      <div id="progress" class="progress" hidden>
+        <div class="track" role="progressbar" aria-label="Progreso de la actualización" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="bar" id="bar"></div></div>
+        <span id="pct" class="pct">0 %</span>
+      </div>
+
+      <div class="actions">
+        <button id="action" class="btn-stone btn-play" type="button" disabled>Comprobando…</button>
+        <button id="secondary" class="btn-stone btn-stone--alt btn-stone--sm" type="button" hidden>Jugar de todos modos</button>
+        <button id="retry" class="link-gold" type="button" hidden>Reintentar conexión</button>
+      </div>
+    </section>
+
+    <section class="showcase" id="showcase" aria-label="Unidades del juego">
+      <div class="glow" aria-hidden="true"></div>
+      <div class="shadow" aria-hidden="true"></div>
+      <button id="ghost-prev" class="ghost ghost--l" type="button"><img alt=""></button>
+      <button id="ghost-next" class="ghost ghost--r" type="button"><img alt=""></button>
+      <figure class="featured" id="featured">
         <img id="featured-img" alt="">
         <figcaption><span id="unit-race"></span><strong id="unit-name"></strong></figcaption>
       </figure>
     </section>
 
-    <section class="panel">
-      <p class="tagline">Estrategia medieval en tiempo real</p>
-      <p id="status" class="status" role="status" aria-live="polite">Comprobando actualizaciones…</p>
-      <div id="progress" class="progress" hidden>
-        <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="bar" id="bar"></div></div>
-        <span id="pct" class="pct">0 %</span>
-      </div>
-      <button id="action" class="cta" type="button" disabled>Comprobando…</button>
-      <button id="secondary" class="ghost" type="button" hidden>Jugar de todos modos</button>
-    </section>
-
-    <nav class="strip" id="strip" aria-label="Carrusel de unidades"></nav>
+    <nav class="races" id="races" aria-label="Razas"></nav>
   </main>
 
   <footer class="footer">
@@ -48,7 +63,7 @@
   <dialog id="terms" aria-labelledby="terms-title">
     <h2 id="terms-title">Términos y políticas</h2>
     <pre id="terms-text">Cargando…</pre>
-    <button id="terms-close" class="cta small" type="button">Cerrar</button>
+    <button id="terms-close" class="btn-stone btn-stone--sm" type="button">Cerrar</button>
   </dialog>
 
   <script src="app.js"></script>

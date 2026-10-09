@@ -23,7 +23,7 @@ function createLauncher() {
     width: 1100, height: 680, resizable: false, maximizable: false, fullscreenable: false,
     backgroundColor: '#0b0a08', show: false, title: 'MasterWar',
     icon: path.join(__dirname, '../../build/icon.ico'),
-    titleBarStyle: 'hidden', titleBarOverlay: { color: '#0b0a08', symbolColor: '#e8d9b0', height: 36 },
+    titleBarStyle: 'hidden', titleBarOverlay: { color: '#150c06', symbolColor: '#e8d9b0', height: 36 },
     webPreferences: {
       preload: path.join(__dirname, '../preload/preload.js'),
       contextIsolation: true, nodeIntegration: false, sandbox: true,

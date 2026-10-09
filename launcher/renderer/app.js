@@ -18,6 +18,8 @@
     btn.dataset.action = { ready: 'play', available: 'update', error: 'check' }[state] || '';
     $('secondary').hidden = !secondary;
     $('progress').hidden = state !== 'updating';
+    $('size').hidden = state !== 'available';
+    $('retry').hidden = !(state === 'ready' && body.dataset.offline);
   }
 
   function setProgress(p) {
@@ -29,13 +31,16 @@
 
   async function check() {
     setState('checking', { status: 'Comprobando actualizaciones…' });
+    delete body.dataset.offline;
     const r = await api.checkUpdate();
     if (r.status === 'available') {
       remoteBytes = r.bytes;
-      setState('available', { status: `Actualización disponible: ${mb(r.bytes)} (versión ${r.remoteVersion})` });
+      $('size-mb').textContent = mb(r.bytes);
+      setState('available', { status: `Nueva versión ${r.remoteVersion} lista para instalar.` });
     } else if (r.status === 'unavailable') {
       // Sin conexión o servidor caído: nunca bloquea; se juega con lo instalado.
-      setState('ready', { status: 'No se pudo buscar actualizaciones. Puedes jugar con la versión instalada.' });
+      body.dataset.offline = '1';
+      setState('ready', { status: 'Sin conexión: no se pudo buscar actualizaciones. Puedes jugar con la versión instalada.' });
     } else {
       setState('ready', { status: 'El juego está al día. ¡Listo para jugar!' });
     }
@@ -60,34 +65,46 @@
 
   $('action').addEventListener('click', () => ({ play, update, check }[$('action').dataset.action] || (() => {}))());
   $('secondary').addEventListener('click', play);
+  $('retry').addEventListener('click', check);
   $('terms-btn').addEventListener('click', async () => { $('terms').showModal(); $('terms-text').textContent = await api.getLicense(); });
   $('terms-close').addEventListener('click', () => $('terms').close());
   $('site-btn').addEventListener('click', () => api.openUrl('https://masterwar-game.hayai.com.ve/'));
   api.onUpdateProgress(setProgress);
 
-  // Carrusel de unidades (art/units.json lo genera scripts/make-art.py)
+  // Escaparate de unidades (art/units.json lo genera scripts/make-art.py): unidad grande + 2 companeros de la raza + escudos.
   async function carousel() {
     const units = await (await fetch('art/units.json')).json();
-    const strip = $('strip'), img = $('featured-img');
-    let i = 0, timer;
-    units.forEach((u, n) => {
+    units.forEach((u) => { new Image().src = u.src; });
+    const races = [...new Set(units.map((u) => u.raceId))];
+    const show$ = $('showcase'), img = $('featured-img'), nav = $('races');
+    const motion = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer, paused = false;
+
+    races.forEach((id) => {
+      const u = units.find((x) => x.raceId === id);
       const b = document.createElement('button');
-      b.type = 'button'; b.title = `${u.name} (${u.race})`; b.setAttribute('aria-label', `${u.name}, ${u.race}`);
-      b.innerHTML = '<img alt="">'; b.firstChild.src = u.src;
-      b.addEventListener('click', () => { show(n); restart(); });
-      strip.appendChild(b);
+      b.type = 'button'; b.className = 'race-btn'; b.dataset.race = id; b.title = u.race; b.setAttribute('aria-label', u.race);
+      b.innerHTML = '<img alt="">'; b.firstChild.src = `art/shields/${id}.png`;
+      b.addEventListener('click', () => { show(units.findIndex((x) => x.raceId === id)); restart(); });
+      nav.appendChild(b);
     });
+
+    const mates = (n) => { const r = units.map((u, k) => k).filter((k) => units[k].raceId === units[n].raceId); const p = r.indexOf(n); return [r[(p + r.length - 1) % r.length], r[(p + 1) % r.length]]; };
     function show(n) {
       i = n;
-      img.classList.add('swap');
-      setTimeout(() => {
-        img.src = units[i].src; img.alt = `${units[i].name} (${units[i].race})`;
-        $('unit-race').textContent = units[i].race; $('unit-name').textContent = units[i].name;
-        img.classList.remove('swap');
-      }, 200);
-      [...strip.children].forEach((c, k) => c.setAttribute('aria-current', String(k === i)));
+      const u = units[n], [pv, nx] = mates(n);
+      body.dataset.race = u.raceId;
+      img.src = u.src; img.alt = `${u.name} (${u.race})`;
+      $('unit-race').textContent = u.race; $('unit-name').textContent = u.name;
+      [['ghost-prev', pv], ['ghost-next', nx]].forEach(([id, k]) => {
+        const g = $(id); g.dataset.to = k; g.firstChild.src = units[k].src; g.setAttribute('aria-label', `Ver ${units[k].name}, ${units[k].race}`);
+      });
+      [...nav.children].forEach((c) => c.setAttribute('aria-pressed', String(c.dataset.race === u.raceId)));
+      show$.classList.remove('enter'); void show$.offsetWidth; show$.classList.add('enter');
     }
-    const restart = () => { clearInterval(timer); timer = setInterval(() => show((i + 1) % units.length), 4500); };
+    ['ghost-prev', 'ghost-next'].forEach((id) => $(id).addEventListener('click', () => { show(+$(id).dataset.to); restart(); }));
+    const restart = () => { clearInterval(timer); if (motion) timer = setInterval(() => { if (!paused) show((i + 1) % units.length); }, 4500); };
+    [show$, nav].forEach((el) => { el.addEventListener('mouseenter', () => { paused = true; }); el.addEventListener('mouseleave', () => { paused = false; }); el.addEventListener('focusin', () => { paused = true; }); el.addEventListener('focusout', () => { paused = false; }); });
     show(Math.floor(Math.random() * units.length));
     restart();
   }

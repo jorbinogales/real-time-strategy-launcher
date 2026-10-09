@@ -1,0 +1,23 @@
+{
+  "name": "masterwar-launcher",
+  "productName": "MasterWar",
+  "version": "0.1.0",
+  "description": "Instalador y launcher de escritorio de MasterWar",
+  "private": true,
+  "main": "src/main/main.js",
+  "author": "MasterWar",
+  "scripts": {
+    "start": "electron .",
+    "art": "python scripts/make-art.py",
+    "build:content": "node scripts/build-content.mjs",
+    "publish:prepare": "node scripts/publish-prepare.mjs",
+    "dist": "electron-builder --win nsis --publish never --config electron-builder.config.cjs",
+    "postdist": "node scripts/fixed-name.mjs",
+    "test:unit": "node test/unit.mjs"
+  },
+  "devDependencies": {
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "three": "^0.160.0"
+  }
+}

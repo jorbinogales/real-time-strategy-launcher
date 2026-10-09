@@ -1,0 +1,59 @@
+﻿MASTERWAR - TERMINOS DE USO Y POLITICA DE PRIVACIDAD
+
+*** AVISO IMPORTANTE ***
+MasterWar fue creado completamente con inteligencia artificial: las voces, las imágenes, los modelos 3D y los efectos de sonido fueron generados con herramientas de IA. Ningún elemento del juego ha sido tomado de otro videojuego.
+************************
+
+BORRADOR: este texto es un borrador informativo y debe ser revisado por un profesional legal antes de su publicación definitiva.
+
+Última actualización: octubre de 2026
+
+
+PARTE 1. TERMINOS DE USO
+
+1. Aceptación
+Al instalar o ejecutar MasterWar (el "Juego") aceptas estos términos. Si no estás de acuerdo, no instales ni uses el Juego.
+
+2. Licencia de uso personal y no comercial
+Se te concede una licencia limitada, personal, no exclusiva, revocable e intransferible para instalar y jugar MasterWar en tus dispositivos, únicamente con fines personales y no comerciales. No puedes vender, alquilar, sublicenciar, redistribuir ni publicar el Juego o sus recursos (imágenes, modelos 3D, voces, sonidos, código) ni usarlos con fines comerciales sin autorización escrita del titular. Tampoco puedes descompilar o modificar el Juego para eludir su funcionamiento normal, salvo en la medida en que la ley aplicable lo permita expresamente.
+
+3. Juego en desarrollo (versión de prueba)
+MasterWar está en desarrollo. La versión que instalas es una versión de prueba: puede contener errores, cambiar sin previo aviso, perder funciones o reiniciarse. Las partidas guardadas y los ajustes podrían dejar de ser compatibles entre versiones. El Juego puede actualizarse a través del launcher; las actualizaciones pueden descargar archivos desde nuestros servidores.
+
+4. Contenido generado con inteligencia artificial
+Las voces, imágenes, modelos 3D y efectos de sonido del Juego han sido generados con herramientas de inteligencia artificial. Esto puede implicar resultados imperfectos o inesperados. No se ha tomado ningún elemento de otro videojuego.
+
+5. Sin garantía
+El Juego se ofrece "tal cual" y "según disponibilidad", sin garantías de ningún tipo, expresas o implícitas, incluidas las de comerciabilidad, idoneidad para un fin particular, ausencia de errores o funcionamiento ininterrumpido.
+
+6. Limitación de responsabilidad
+En la máxima medida permitida por la ley, el titular de MasterWar no será responsable de daños indirectos, incidentales o consecuentes, ni de la pérdida de datos o partidas, derivados del uso o de la imposibilidad de usar el Juego.
+
+7. Cambios
+Podemos modificar estos términos. La versión vigente estará disponible en el launcher (botón "Términos y políticas") y en el sitio web del Juego. Seguir usando el Juego tras un cambio implica su aceptación.
+
+
+PARTE 2. POLITICA DE PRIVACIDAD
+
+1. Qué datos se guardan en tu equipo
+MasterWar guarda localmente, en tu equipo, tus ajustes (volumen, calidad gráfica, etc.) y tus partidas guardadas. Estos datos permanecen en tu dispositivo, no se envían a ningún servidor y no se borran al actualizar el Juego. Puedes eliminarlos borrando la carpeta de datos del Juego (%APPDATA%\MasterWar) tras desinstalarlo. El desinstalador no borra tus partidas ni ajustes sin avisarte.
+
+2. Qué datos recibimos
+El Juego y el launcher no recopilan datos personales ni telemetría. Al buscar actualizaciones, tu equipo solicita al servidor de actualizaciones un archivo de lista de versiones; como en cualquier conexión a internet, el servidor puede registrar tu dirección IP y la fecha de la consulta con fines técnicos y de seguridad.
+
+3. Correo electrónico
+Solo conservamos tu correo electrónico si lo proporcionaste voluntariamente en el sitio web de MasterWar (por ejemplo, para recibir novedades). Lo usamos únicamente para ese fin, no lo vendemos y puedes pedir que lo eliminemos en cualquier momento escribiendo al contacto indicado abajo.
+
+4. Terceros
+El Juego instalado funciona con sus recursos incluidos y no carga contenido de servicios de terceros durante la partida. El launcher solo se conecta al servidor de actualizaciones de MasterWar.
+
+5. Tus derechos
+Puedes solicitar acceso, rectificación o eliminación de los datos personales que tengamos sobre ti (por ejemplo, tu correo) escribiendo al contacto indicado abajo.
+
+
+CONTACTO
+Sitio web: https://masterwar-game.hayai.com.ve/
+Correo de contacto: contacto@hayai.com.ve   (PENDIENTE DE CONFIRMAR antes de publicar)
+
+
+Al pulsar "Acepto" confirmas que has leído y aceptas estos términos y la política de privacidad.

@@ -1,0 +1,98 @@
+[
+ {
+  "race": "Humanos",
+  "raceId": "humanos",
+  "name": "Arquero",
+  "src": "art/units/humanos/arquero.png"
+ },
+ {
+  "race": "Humanos",
+  "raceId": "humanos",
+  "name": "Campesino",
+  "src": "art/units/humanos/campesino.png"
+ },
+ {
+  "race": "Humanos",
+  "raceId": "humanos",
+  "name": "Lancero",
+  "src": "art/units/humanos/lancero.png"
+ },
+ {
+  "race": "Humanos",
+  "raceId": "humanos",
+  "name": "Soldado Raso",
+  "src": "art/units/humanos/soldado-raso.png"
+ },
+ {
+  "race": "Orcos",
+  "raceId": "orcos",
+  "name": "Berserker",
+  "src": "art/units/orcos/berserker.png"
+ },
+ {
+  "race": "Orcos",
+  "raceId": "orcos",
+  "name": "Esclavo",
+  "src": "art/units/orcos/esclavo.png"
+ },
+ {
+  "race": "Orcos",
+  "raceId": "orcos",
+  "name": "Lanzador Jabalina",
+  "src": "art/units/orcos/lanzador-jabalina.png"
+ },
+ {
+  "race": "Orcos",
+  "raceId": "orcos",
+  "name": "Orco Lancero",
+  "src": "art/units/orcos/orco-lancero.png"
+ },
+ {
+  "race": "Elfos",
+  "raceId": "elfos",
+  "name": "Arquero",
+  "src": "art/units/elfos/arquero.png"
+ },
+ {
+  "race": "Elfos",
+  "raceId": "elfos",
+  "name": "Guardian",
+  "src": "art/units/elfos/guardian.png"
+ },
+ {
+  "race": "Elfos",
+  "raceId": "elfos",
+  "name": "Guerrero",
+  "src": "art/units/elfos/guerrero.png"
+ },
+ {
+  "race": "Elfos",
+  "raceId": "elfos",
+  "name": "Trabajador",
+  "src": "art/units/elfos/trabajador.png"
+ },
+ {
+  "race": "Enanos",
+  "raceId": "enanos",
+  "name": "Guerrero",
+  "src": "art/units/enanos/guerrero.png"
+ },
+ {
+  "race": "Enanos",
+  "raceId": "enanos",
+  "name": "Lancero",
+  "src": "art/units/enanos/lancero.png"
+ },
+ {
+  "race": "Enanos",
+  "raceId": "enanos",
+  "name": "Lanzador",
+  "src": "art/units/enanos/lanzador.png"
+ },
+ {
+  "race": "Enanos",
+  "raceId": "enanos",
+  "name": "Obrero",
+  "src": "art/units/enanos/obrero.png"
+ }
+]

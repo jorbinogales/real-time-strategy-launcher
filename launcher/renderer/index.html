@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MasterWar</title>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-state="checking">
+  <!-- Maqueta funcional. La dirección visual final la define L.E.O.A.R.T: restilizar solo este HTML y styles.css.
+       La lógica vive en app.js y se engancha por id / data-state; el proceso principal no se toca. -->
+  <div class="bg" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <img class="logo" src="art/logo.svg" alt="MasterWar">
+    <span class="version" id="version">Versión …</span>
+  </header>
+
+  <main class="layout">
+    <section class="feature" aria-label="Unidades del juego">
+      <figure class="featured">
+        <img id="featured-img" alt="">
+        <figcaption><span id="unit-race"></span><strong id="unit-name"></strong></figcaption>
+      </figure>
+    </section>
+
+    <section class="panel">
+      <p class="tagline">Estrategia medieval en tiempo real</p>
+      <p id="status" class="status" role="status" aria-live="polite">Comprobando actualizaciones…</p>
+      <div id="progress" class="progress" hidden>
+        <div class="track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track"><div class="bar" id="bar"></div></div>
+        <span id="pct" class="pct">0 %</span>
+      </div>
+      <button id="action" class="cta" type="button" disabled>Comprobando…</button>
+      <button id="secondary" class="ghost" type="button" hidden>Jugar de todos modos</button>
+    </section>
+
+    <nav class="strip" id="strip" aria-label="Carrusel de unidades"></nav>
+  </main>
+
+  <footer class="footer">
+    <button id="terms-btn" class="link" type="button">Términos y políticas</button>
+    <button id="site-btn" class="link" type="button">masterwar-game.hayai.com.ve</button>
+    <span id="launcher-version" class="muted"></span>
+  </footer>
+
+  <dialog id="terms" aria-labelledby="terms-title">
+    <h2 id="terms-title">Términos y políticas</h2>
+    <pre id="terms-text">Cargando…</pre>
+    <button id="terms-close" class="cta small" type="button">Cerrar</button>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
